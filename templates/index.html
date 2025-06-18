@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cilt Tipi Analizi</title>
+    
+  <!-- ✅ Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Overlock&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+    <div class="container-home">
+        <div class="side-bar">
+            <div class="logo-container">
+                <img src="/static/images/logo2.png" alt="logo" class="logo" >
+                <button class="side-style" id="homeBtn">
+                    <img src="/static/images/home.png" alt="home" class="icon">
+                    <div>Anasayfa</div>
+                </button>
+                <button class="side-style" id="searchBtn">
+                    <img src="/static/images/search.png" alt="search" class="icon">
+                    <div>Kontrol Et</div>
+                </button>
+            </div>
+            <div class="side-buttons">
+
+                <button class="side-style settingsBtn">
+                    <img src="/static/images/settings.png" alt="settings" class="icon">
+                    <div>Ayarlar</div>
+                </button>
+                <a href="/login" class="btn " id="signIn">Giriş yap</a>
+                <a href="/signup" class="btn" id="signUp">kayıt ol</a>
+                <button id="logoutBtn" class="btn">Çıkış Yap</button>
+            </div>
+        </div>
+
+        <div id="main-container">
+            <div class="imageInfo">Yüklediğiniz görseller yalnızca modelin analiz etmesi için kullanılmaktadır.</div>
+            <div class="header mainGeneral">
+                <div class="mainFirstpart">
+                    <span class="maintext">Cildine yakışanı</span><br>
+                    <span class="maintext-2">keşfet.</span>
+                    <p class="subtext">Cilt tipine özel analiz ve içerik önerileri burada</p>
+                </div>
+
+            </div>
+    
+          
+        
+            <div class="instructions">
+                <h2>Analizde kullanılan selfie için bazı talimatlar:</h2>
+                <ul>
+                    <li>
+                        <img src="{{ url_for('static', filename='images/glasses.png') }}" alt="Gözlük" class="icon-img">
+                        <div>
+                            <strong>Gözlüklerinizi çıkarın. </strong><br>
+                            <span>Gözlükler, yüz hatlarınızı tam olarak göstermeyebilir. Lütfen gözlüğünüzü çıkarın ve yüzünüzün temiz olduğundan emin olun. Bu, analiz için daha doğru sonuçlar sağlar.</span>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="{{ url_for('static', filename='images/makeup.png') }}" alt="Makyaj" class="icon-img">
+                        <div>
+                            <strong>Makyajsız olması daha iyi olacaktır. </strong><br>
+                            <span>Makyaj, cilt dokunuzu ve tonunuzu örtebilir. Cildinizin doğal hâlini göstermeniz, analizimizin daha isabetli olmasına yardımcı olur. Lütfen yüzünüzde makyaj olmadığından emin olun.</span> 
+        
+                        </div>
+                    </li>
+                    <li>
+                        <img src="{{ url_for('static', filename='images/lightbulb.png') }}" alt="Işık" class="icon-img">
+                        <div>
+                            <strong>İyi aydınlatılmış bir ortam seçin.</strong><br>
+                            <span> Doğal ışıkta çekilen fotoğraflar, cilt detaylarını en iyi şekilde gösterir. Işık yüzünüze doğrudan gelecek şekilde konumlanın. Karanlık ya da gölgeli ortamlardan kaçının.</span> 
+                        </div>
+                    </li>
+                    <li>
+                        <img src="{{ url_for('static', filename='images/face.png') }}" alt="Yüz" class="icon-img">
+                        <div>
+                            <strong>Yüzünüzün net göründüğünden emin olun.</strong><br>
+                            <span> Yanak veya T bölgesini içeren bir fotoğraf seçin. Kamera ile aranızdaki mesafe çok yakın veya çok uzak olmamalı.</span> 
+        
+        
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+           
+        <div class="download-image-container">
+            <h2 class="download-title">Cildini Tanımaya Hazır mısın?</h2>
+            <p class="download-subtitle">Yüzünü ve yan profilden bir yanak görselini yükle. Güzellik seninle başlıyor, biz sadece yol gösteriyoruz.</p>
+            
+            <div class="images">
+                <div>
+                    <input class="file-btn" type="file" id="fileInputYanak">
+                    <img id="previewYanak" style="display:none;" />
+                </div>
+    
+                <div>
+                    <input class="file-btn" type="file" id="fileInputOnden">
+                    <img id="previewOnden" style="display:none;" />
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="ResultsContainer">
+            <h2 class="result-title">Sonuçlara Bakalım</h2>
+
+            <div class="analyzeStyle analyzeContainer">
+                <div class="analyzeText">
+                    <button id="analyzeBtn">Analiz Et</button>
+                    <div id="result"></div>      
+                </div>
+            </div>
+
+            <button id="viewResultsBtn">Analiz Sonuçlarım</button>
+        </div>
+        
+        <div id="myResultsContainer"></div>
+       
+        
+        <div id="icerik-onerileri" ></div>
+        <div id="urun-onerileri"  ></div>
+        <div id="avoid-icerikler"></div>
+        
+        <div id="sonucAlani"></div>
+        
+        <p id="urunSayisi"></p>
+    
+        </div>  
+
+        <div id="search-container" style="display: none;">
+
+            <div class="header-search mainGeneral">
+                <div class="mainFirstpartSearch">
+                    <span class="searchText">İçeriklerin Birlikte Nasıl Davrandığını Görelim</span><br>
+                    <p class="searchSubtext">Cilt ürünlerini birlikte kullanmadan önce, içeriklerin birbirleriyle uyumlu olup olmadığını kontrol et.</p>
+                </div>
+            </div>
+
+            <div class="searchInfoText">
+                Bazı cilt bakım içerikleri bir araya geldiğinde etkilerini kaybedebilir ya da cildinde tahrişe, 
+                kuruluğa, hassasiyete yol açabilir. İçerik kombinasyonlarını önceden kontrol etmek, cildin sağlığı ve ürünlerden en iyi 
+                verimi almak için çok önemlidir.
+            </div>
+
+            <div class="input-container">
+                <input type="text" id="searchInput" placeholder="İçerik ara (örn: vitamin c)">
+            </div>
+
+            <div id="ingredientList"></div>
+            <div id="ingredientResults"></div>
+
+        </div>
+
+        <div id="conflictModal" class="modal">
+            <div class="modal-content">
+                <span id="closeModal" class="close">&times;</span>
+                <div id="modalBody"></div>
+            </div>
+        </div>
+
+        <div class="settings" style="display: none;">
+            <div class="header-settings settingsGeneral">
+                <div class="mainFirstpart">
+                    <span class="maintext">Ayarlar</span>
+                    <p class="subtext">Bu bölümde uygulama bilgilerinizi bulabilirsiniz</p>
+                </div>
+            </div>
+            <div>
+                <div class="card">
+                    <h3>👤 Kullanıcı Bilgisi</h3>
+                    <p class="user-email"></p>
+                </div>
+                <div class="card">
+                    <h3>🧬 Cilt Tipi Bilgisi</h3>
+                    <p id="skin-type">Yükleniyor...</p>
+                </div>
+                <div class="card">
+                    <h3>Önerilen içerikler</h3>
+                    <div id="recommended-ingredients"></div>
+                </div>
+
+            </div>
+            </div>
+
+    </div>
+
+
+
+    <!-- TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.16.0/dist/tf.min.js"></script>
+    
+    <!-- Ana JS -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
