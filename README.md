@@ -27,13 +27,13 @@
 ## Sample Usage
 
 Upload a clear image of your face and click “Predict”. The model will classify your skin as:
-	•	Dry
-	•	Oily
-	•	Normal
-	•	Combination
+-**Dry**
+-**Oily**
+-**Normal**
+-**Combination**
 
 ## Future Improvements
 
- 	•	Enhance dataset for better generalization
-	•	Add a confidence score display
-	•	Deploy online (e.g., using Streamlit, Heroku)
+-**Enhance dataset for better generalization**
+-**Add a confidence score display**
+-**Deploy online (e.g., using Streamlit, Heroku)**
