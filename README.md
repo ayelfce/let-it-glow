@@ -10,6 +10,15 @@
 - Clean and simple HTML/CSS interface
 - Runs locally using Flask
 
+## 💄 Product Recommendation
+
+Based on the detected skin type, the app suggests basic skincare product types (e.g., cleanser, moisturizer) tailored for:
+
+- Dry Skin → Hydrating and rich moisturizers
+- Oily Skin → Lightweight and non-comedogenic products
+- Normal Skin → Balanced formulas
+- Combination Skin → Zone-specific care recommendations
+
 ## 🧠 Model
 
 - Architecture: MobileNetV2
@@ -31,6 +40,11 @@ Upload a clear image of your face and click “Predict”. The model will classi
 - **Oily**
 - **Normal**
 - **Combination**
+
+## Images from the Website
+<img width="1440" alt="Screenshot 2025-06-18 at 19 36 33" src="https://github.com/user-attachments/assets/de7fe837-4752-420f-9d2b-254476ba54d4" />
+<img width="1440" alt="Screenshot 2025-06-18 at 19 38 44" src="https://github.com/user-attachments/assets/4d56869f-79e3-478a-bf20-5e989b18fc4a" />
+
 
 ## Future Improvements
 
