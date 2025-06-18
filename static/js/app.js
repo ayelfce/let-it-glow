@@ -1,11 +1,11 @@
 const firebaseConfig = {
-  apiKey: "AIzaSyB7rtQ4UfqrbWTSZiGsGtIJP_JmVi-VP3Q",
+  apiKey: "***",
   authDomain: "bitirme-e59ed.firebaseapp.com",
   projectId: "bitirme-e59ed",
   storageBucket: "bitirme-e59ed.appspot.com",
-  messagingSenderId: "1050424184852",
-  appId: "1:1050424184852:web:eec13235993c41bba51701",
-  measurementId: "G-536RM71HM0",
+  messagingSenderId: "***",
+  appId: "***",
+  measurementId: "***",
   databaseURL: "https://bitirme-e59ed-default-rtdb.firebaseio.com/"
 };
 
@@ -26,7 +26,6 @@ auth.onAuthStateChanged(user => {
   }
 });
 
-// 🔍 HTML elementleri
 const yanakInput = document.getElementById('fileInputYanak');
 const ondenInput = document.getElementById('fileInputOnden');
 const previewYanak = document.getElementById('previewYanak');
@@ -114,7 +113,6 @@ if (lastResults) {
   recommendedIngredients.innerHTML = html || '<p>İçerik önerisi bulunamadı.</p>';
 }
 
-// 🔍 Görsel ön izleme
 function handlePreview(input, previewElement) {
   input.addEventListener('change', event => {
     const file = event.target.files[0];
@@ -133,9 +131,6 @@ function handlePreview(input, previewElement) {
 handlePreview(yanakInput, previewYanak);
 handlePreview(ondenInput, previewOnden);
 
-
-
-// 🔎 Analiz butonuna tıklanınca
 analyzeBtn.addEventListener('click', async () => {
   const yanakFile = yanakInput.files[0];
   const ondenFile = ondenInput.files[0];
@@ -166,10 +161,8 @@ analyzeBtn.addEventListener('click', async () => {
 
     resultDiv.innerHTML = `<strong>Cilt Tipiniz:</strong> ${label}`;
 
-    // Sonuçları localStorage'a kaydet (kullanıcı sonra "Sonuçlarım"da görecek)
     localStorage.setItem('sonAnaliz', JSON.stringify({ result, label, ciltTipi}));
 
-    // Firebase'e kayıt
     if (currentUser) {
       const timestamp = new Date().toISOString();
       const avoidData = await fetch('static/veriler/avoid_icerikler.json').then(res => res.json());
@@ -204,11 +197,9 @@ document.getElementById('viewResultsBtn').addEventListener('click', async () => 
   }
 
   const { result, ciltTipi, label } = analizData;
-
-  // İçerik önerileri
+  
     resultDiv.innerHTML = `<strong>Analiz Sonucu:</strong> ${label}`;
 
-    // İçerik Önerileri
     const urunTipleri = result.urun_tipleri || {};
     let html = '';
     for (const [urunTipi, data] of Object.entries(urunTipleri)) {
@@ -314,7 +305,6 @@ document.getElementById('viewResultsBtn').addEventListener('click', async () => 
       urun.puan = puan;
     });
 
-  // Aynı şekilde kategorilere göre grupla
   const kategorilereGore = {};
   gosterilecekUrunler.forEach(urun => {
     const kategori = urun.urun || 'diğer';
@@ -324,7 +314,6 @@ document.getElementById('viewResultsBtn').addEventListener('click', async () => 
     kategorilereGore[kategori].push(urun);
   });
   
-    // Puan hesapla
     data.forEach(urun => {
       const icerik = urun.icerik?.toLowerCase() || "";
       let puan = 100;
@@ -338,17 +327,16 @@ document.getElementById('viewResultsBtn').addEventListener('click', async () => 
       urun.puan = puan;
     });
 
-    // DOM'a yazdır
     urunContainer.innerHTML = `<h2>En İyi ve Daha Az İyi Ürünler</h2>`;
 
     for (const kategori in kategorilereGore) {
       const grup = kategorilereGore[kategori];
-      const sirali = grup.sort((a, b) => b.puan - a.puan); // yüksekten düşüğe
+      const sirali = grup.sort((a, b) => b.puan - a.puan);
 
       // En iyi 3
       const enIyi = sirali.slice(0, 3);
       // En kötü 3
-      const enKotu = sirali.slice(-3).reverse(); // tersten al ki düşük puanlılar yukarıda gözüksün
+      const enKotu = sirali.slice(-3).reverse();
 
       const baslik = document.createElement('h3');
       baslik.textContent = kategori.toUpperCase();
@@ -386,7 +374,6 @@ document.getElementById('viewResultsBtn').addEventListener('click', async () => 
     }
   });
 
-  // Avoid içerikleri
   const avoidData = await fetch('static/veriler/avoid_icerikler.json').then(res => res.json());
   const avoidList = avoidData[ciltTipi]?.avoid || [];
 
@@ -518,8 +505,6 @@ function renderButtons(filteredIngredients) {
     renderButtons(filtered);
     ingredientResultContainer.innerHTML = "";
   });
-
-  // İlk başta tüm içerikleri göster
   renderButtons(allIngredients);
 });
 
