@@ -32,7 +32,7 @@ Upload a clear image of your face and click “Predict”. The model will classi
 	•	Normal
 	•	Combination
 
- ## Future Improvements
+## Future Improvements
 
  	•	Enhance dataset for better generalization
 	•	Add a confidence score display
